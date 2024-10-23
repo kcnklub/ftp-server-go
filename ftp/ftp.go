@@ -10,7 +10,6 @@ func Serve(conn FTPConn) {
 	conn.respond(status220)
 	scanner := bufio.NewScanner(conn.Conn)
 	for scanner.Scan() {
-
 		input := scanner.Text()
 		log.Println("<< " + input)
 
@@ -22,10 +21,12 @@ func Serve(conn FTPConn) {
 			conn.user(args)
 		case "QUIT":
 			conn.respond(status221)
-			return
 		case "PORT":
-			conn.connect(args)
-			return
+			conn.setDataAddr(args)
+		case "LIST":
+			conn.list()
+		case "RETR":
+			conn.retr(args)
 		default:
 			conn.respond(status502)
 		}

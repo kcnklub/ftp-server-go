@@ -4,10 +4,11 @@ import "net"
 
 type FTPConn struct {
 	Conn     net.Conn
-	DataConn net.Conn
+	DataAddr string
 	dataType string
+	root     string
 }
 
 func NewConn(conn net.Conn) FTPConn {
-	return FTPConn{conn, nil, "ascii"}
+	return FTPConn{conn, "", "ascii", "."}
 }
