@@ -27,6 +27,8 @@ func Serve(conn FTPConn) {
 			conn.list()
 		case "RETR":
 			conn.retr(args)
+		case "STOR":
+			conn.stor(args)
 		default:
 			conn.respond(status502)
 		}

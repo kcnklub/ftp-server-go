@@ -8,8 +8,9 @@ import (
 
 func (conn *FTPConn) setDataAddr(args []string) {
 
-	// assume localhost at the moment.
 	data := strings.Split(args[0], ",")
+
+	i1, i2, i3, i4 := data[0], data[1], data[2], data[3]
 
 	p1, p2 := data[4], data[5]
 
@@ -24,7 +25,6 @@ func (conn *FTPConn) setDataAddr(args []string) {
 
 	p := (p1int * 256) + p2int
 
-	conn.DataAddr = fmt.Sprintf("127.0.0.1:%d", p)
-
+	conn.DataAddr = fmt.Sprintf("%s.%s.%s.%s:%d", i1, i2, i3, i4, p)
 	conn.respond(status200)
 }
