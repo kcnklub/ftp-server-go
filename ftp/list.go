@@ -7,16 +7,17 @@ import (
 )
 
 func (c *FTPConn) list() {
-	dir, err := os.ReadDir(c.root)
+	dir, err := os.ReadDir(c.Root)
 	if err != nil {
-		c.respond("Error reading directory")
+		c.respond(fmt.Sprintf("Error reading directory: %s\n", err))
 	}
 
 	c.respond(status150)
 
 	dataConn, err := net.Dial("tcp", c.DataAddr)
 	if err != nil {
-		c.respond("Cannot open DTP")
+		c.respond(status426)
+		return
 	}
 	defer dataConn.Close()
 

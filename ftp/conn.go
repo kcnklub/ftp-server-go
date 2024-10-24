@@ -8,7 +8,7 @@ type FTPConn struct {
 	Conn     io.ReadWriteCloser
 	DataAddr string
 	dataType string
-	root     string
+	Root     string
 }
 
 func NewConn(conn io.ReadWriteCloser) FTPConn {

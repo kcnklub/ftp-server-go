@@ -21,7 +21,7 @@ func TestUserCommand(t *testing.T) {
 		go readAndAssertFromServer(t, client, expected[:])
 
 		client.Write([]byte("USER testuser\n"))
-		time.Sleep(2 * time.Second)
+		time.Sleep(500 * time.Millisecond)
 		client.Close()
 	}(t)
 
