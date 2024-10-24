@@ -6,11 +6,18 @@ import (
 	"strings"
 )
 
-func Serve(conn FTPConn) {
+func Serve(conn *FTPConn) {
 	conn.respond(status220)
-	scanner := bufio.NewScanner(conn.Conn)
-	for scanner.Scan() {
-		input := scanner.Text()
+	scanner := bufio.NewReader(conn.Conn)
+	for {
+		buf, _, err := scanner.ReadLine()
+		if err != nil {
+			log.Printf("Unable to readline: %s\n", err)
+			break
+		}
+
+		input := string(buf[:])
+
 		log.Println("<< " + input)
 
 		split := strings.Split(input, " ")

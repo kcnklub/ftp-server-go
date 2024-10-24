@@ -24,7 +24,8 @@ func main() {
 
 		go func(conn net.Conn) {
 			defer conn.Close()
-			ftp.Serve(ftp.NewConn(conn))
+			c := ftp.NewConn(conn)
+			ftp.Serve(&c)
 		}(conn)
 	}
 }

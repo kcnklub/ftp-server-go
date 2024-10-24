@@ -24,6 +24,6 @@ func (c *FTPConn) respond(s string) {
 	log.Println(">> " + fmt.Sprint(s, "\n"))
 	_, err := fmt.Fprint(c.Conn, s, "\n")
 	if err != nil {
-		log.Println("error sending data")
+		log.Printf("error sending data: %s\n", err)
 	}
 }
