@@ -21,7 +21,7 @@ func TestUserCommand(t *testing.T) {
 		go readAndAssertFromServer(t, client, expected[:])
 
 		client.Write([]byte("USER testuser\n"))
-		time.Sleep(500 * time.Millisecond)
+		time.Sleep(100 * time.Millisecond)
 		client.Close()
 	}(t)
 
@@ -37,7 +37,7 @@ func TestQuitCommand(t *testing.T) {
 		go readAndAssertFromServer(t, client, expected[:])
 
 		client.Write([]byte("QUIT\n"))
-		time.Sleep(500 * time.Millisecond)
+		time.Sleep(100 * time.Millisecond)
 		client.Close()
 	}(t)
 
@@ -53,7 +53,7 @@ func TestNotSupportedCommand(t *testing.T) {
 		go readAndAssertFromServer(t, client, expected[:])
 
 		client.Write([]byte("NONSUPPORTED\n"))
-		time.Sleep(500 * time.Millisecond)
+		time.Sleep(100 * time.Millisecond)
 		client.Close()
 	}(t)
 
@@ -68,7 +68,7 @@ func TestPortCommand(t *testing.T) {
 		go readAndAssertFromServer(t, client, expected[:])
 
 		client.Write([]byte("PORT 127,0,0,1,31,144\n"))
-		time.Sleep(500 * time.Millisecond)
+		time.Sleep(100 * time.Millisecond)
 		client.Close()
 	}(t)
 

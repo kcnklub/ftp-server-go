@@ -2,6 +2,7 @@ package ftp
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"net"
 	"os"
@@ -11,9 +12,10 @@ func (c *FTPConn) stor(args []string) {
 
 	filename := args[0]
 
-	f, err := os.Create(filename)
+	f, err := os.Create(fmt.Sprintf(c.Root + "/" + filename))
 	if err != nil {
 		c.respond(status426)
+		return
 	}
 	defer f.Close()
 
@@ -22,6 +24,7 @@ func (c *FTPConn) stor(args []string) {
 	d, err := net.Dial("tcp", c.DataAddr)
 	if err != nil {
 		c.respond("Cannot open DTP")
+		return
 	}
 	defer d.Close()
 
@@ -30,15 +33,16 @@ func (c *FTPConn) stor(args []string) {
 	i, err := r.Read(buf)
 	if err != nil {
 		c.respond(status426)
+		return
 	}
 
 	log.Printf("Reading %d bytes\n", i)
+	log.Printf("Reading %s\n", string(buf))
 
-	w := bufio.NewWriter(f)
-	i, err = w.Write(buf)
-	w.Flush()
+	i, err = f.Write(buf[:i])
 	if err != nil {
 		c.respond(status426)
+		return
 	}
 	log.Printf("Writing %d bytes\n", i)
 
