@@ -65,3 +65,20 @@ func TestListNoDataConnectionCommand(t *testing.T) {
 	ftpConn.Root = "./../test_content"
 	Serve(&ftpConn)
 }
+
+func TestListInvalidDirectorySelected(t *testing.T) {
+	expected := [4]string{status220, status550}
+	server, client := net.Pipe()
+
+	go func(t *testing.T) {
+		go readAndAssertFromServer(t, client, expected[:])
+
+		client.Write([]byte("LIST\n"))
+		time.Sleep(2 * time.Second)
+		client.Close()
+	}(t)
+
+	ftpConn := NewConn(server)
+	ftpConn.Root = "./../test_content/I_DONT_EXIST"
+	Serve(&ftpConn)
+}

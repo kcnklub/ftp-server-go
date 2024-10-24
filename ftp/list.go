@@ -9,7 +9,8 @@ import (
 func (c *FTPConn) list() {
 	dir, err := os.ReadDir(c.Root)
 	if err != nil {
-		c.respond(fmt.Sprintf("Error reading directory: %s\n", err))
+		c.respond(status550)
+		return
 	}
 
 	c.respond(status150)
