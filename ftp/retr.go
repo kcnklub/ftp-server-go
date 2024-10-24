@@ -10,7 +10,7 @@ func (c *FTPConn) retr(args []string) {
 
 	filename := args[0]
 
-	file, err := os.ReadFile(filename)
+	file, err := os.ReadFile(fmt.Sprintf(c.Root + "/" + filename))
 	if err != nil {
 		c.respond(status426)
 	}
