@@ -26,6 +26,8 @@ func Serve(conn *FTPConn) {
 		switch command {
 		case "USER":
 			conn.user(args)
+		case "CWD":
+			conn.cwd(args)
 		case "QUIT":
 			conn.respond(status221)
 		case "PORT":

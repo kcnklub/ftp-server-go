@@ -12,5 +12,5 @@ type FTPConn struct {
 }
 
 func NewConn(conn io.ReadWriteCloser) FTPConn {
-	return FTPConn{conn, "", "ascii", "."}
+	return FTPConn{conn, "", "ascii", "./"}
 }
